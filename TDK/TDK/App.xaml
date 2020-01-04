@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TDK.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="whiteFlagKepno">#ffffff</Color>
+            <Color x:Key="blueFlagKepno">#4569FD</Color>
+            <Color x:Key="greenFlagKepno">#039159</Color>
+            <Color x:Key="blueArmsKepno">#26B0DF</Color>
+            <Color x:Key="greenArmsKepno">#749A4F</Color>
+            <Color x:Key="standardBackground">#303030</Color>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

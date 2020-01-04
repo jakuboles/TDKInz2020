@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TDK.RegisterPage"
+             BackgroundColor="{StaticResource standardBackground}">
+    <StackLayout VerticalOptions="Center"
+                 Margin="20,0">
+        
+        <Entry x:Name="emailEntry"
+            Placeholder="Email"
+            PlaceholderColor="{StaticResource whiteFlagKepno}"
+            Keyboard="Email"
+            TextColor="{StaticResource whiteFlagKepno}"/>
+
+        <Entry x:Name="passwordEntry"
+            Placeholder="Hasło"
+            PlaceholderColor="{StaticResource whiteFlagKepno}"
+            IsPassword="True"
+            TextColor="{StaticResource whiteFlagKepno}"/>
+
+        <Entry x:Name="confirmPasswordEntry"
+            Placeholder="Potwierdź Hasło"
+            PlaceholderColor="{StaticResource whiteFlagKepno}"
+            IsPassword="True"
+            TextColor="{StaticResource whiteFlagKepno}"/>
+
+        <Button x:Name="registerUserButton"
+                Text="Zaloguj"
+                BackgroundColor="{StaticResource greenFlagKepno}"
+                TextColor="{StaticResource whiteFlagKepno}"
+                Clicked="RegisterUserButton_Clicked"/>
+    </StackLayout>
+</ContentPage>
