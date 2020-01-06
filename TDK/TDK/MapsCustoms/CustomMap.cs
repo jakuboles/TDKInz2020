@@ -7,6 +7,8 @@ namespace TDK.MapsCustoms
 {
     public class CustomMap : Map
     {
+        private CustomMap locationsMap;
+
         public List<CustomCircle> CircleList { get; set; }
     }
 }

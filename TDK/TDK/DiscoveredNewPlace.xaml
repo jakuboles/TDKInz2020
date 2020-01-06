@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TDK.DiscoveredNewPlace"
+             BackgroundColor="{StaticResource standardBackground}">
+    <StackLayout>
+        <Label Text="NOWE MIEJSCE ODKRYTE!"
+               TextColor="{StaticResource whiteFlagKepno}"
+               FontSize="40"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="CenterAndExpand"
+               HorizontalTextAlignment="Center"
+               Margin="20, 0, 20, 0"/>
+        <StackLayout Margin="50, 0, 50, 25">
+            <Label x:Name="placeName"
+               Text="Nazwa miejsca"
+               HorizontalOptions="CenterAndExpand"
+               TextColor="{StaticResource whiteFlagKepno}"
+               Margin="0, 0, 0, 25"
+               HorizontalTextAlignment="Center"
+               FontSize="36"/>
+            <Label x:Name="placeAddress"
+               Text="adres miejsca"
+               HorizontalOptions="CenterAndExpand"
+               HorizontalTextAlignment="Center"
+               TextColor="{StaticResource whiteFlagKepno}"
+               FontSize="24"/>
+        </StackLayout>
+        <StackLayout VerticalOptions="StartAndExpand"
+                     HorizontalOptions="CenterAndExpand"
+                     Margin="25, 0, 25, 0">
+            <Label x:Name="PlaceDescription"
+                   Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eros tortor, bibendum at augue nec, facilisis sagittis purus. Ut ex nisi, eleifend vel facilisis quis, lacinia nec massa"
+                   TextColor="{StaticResource whiteFlagKepno}"
+                   HorizontalTextAlignment="Center"
+                   FontSize="18"/>
+        </StackLayout>
+        <Button x:Name="OkButton"
+                Text="ŚWIETNIE"
+                TextColor="{StaticResource blueFlagKepno}"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="StartAndExpand"
+                BackgroundColor="Transparent"
+                FontSize="24"
+                Padding="0"
+                Clicked="OkButton_Clicked"/>
+    </StackLayout>
+</ContentPage>

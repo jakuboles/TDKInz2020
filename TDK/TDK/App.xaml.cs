@@ -18,7 +18,6 @@ namespace TDK
             InitializeComponent();
 
             MainPage = new NavigationPage(new LoginPage());
-            
         }
 
         public App(string databaseLocation)

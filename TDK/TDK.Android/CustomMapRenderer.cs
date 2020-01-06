@@ -1,5 +1,6 @@
 ﻿using Android.Content;
 using Android.Gms.Maps.Model;
+using Java.Lang;
 using MapOverlay;
 using MapOverlay.Droid;
 using System.Collections.Generic;
@@ -21,6 +22,8 @@ namespace MapOverlay.Droid
         protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Xamarin.Forms.Maps.Map> e)
         {
             base.OnElementChanged(e);
+
+            
 
             if (e.OldElement != null)
             {
