@@ -23,8 +23,6 @@ namespace MapOverlay.Droid
         {
             base.OnElementChanged(e);
 
-            
-
             if (e.OldElement != null)
             {
 

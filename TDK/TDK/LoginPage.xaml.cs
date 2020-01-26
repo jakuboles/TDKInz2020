@@ -31,7 +31,7 @@ namespace TDK
                 {
                     if(user.Password == passwordEntry.Text)
                     {
-                        await Navigation.PushModalAsync(new MainPage());
+                        await Navigation.PushModalAsync(new LoadingPage());
                     }
                     else
                     {

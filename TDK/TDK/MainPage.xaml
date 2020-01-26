@@ -4,10 +4,18 @@
              xmlns:local="clr-namespace:TDK.MapsCustoms"
              x:Class="TDK.MainPage"
              BackgroundColor="{StaticResource standardBackground}">
-
-    <local:CustomMap x:Name="locationsMap" 
+    <StackLayout>
+        <local:CustomMap x:Name="locationsMap" 
               HorizontalOptions="FillAndExpand" 
               VerticalOptions="FillAndExpand"
               MapType="Hybrid"/>
+        <Button x:Name="statsButton"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="End"
+            TextColor="{StaticResource whiteFlagKepno}"
+            Text="STATYSTYKI"
+            Clicked="StatsButton_Clicked"/>
+    </StackLayout>
+    
 
 </ContentPage>

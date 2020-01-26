@@ -16,16 +16,28 @@ namespace TDK
     {
         public bool hasLocationPermission = false;
         private List<Place> globalUndiscoveredPlaces = new List<Place>();
+        private List<CustomCircle> globalCircleList = new List<CustomCircle>();
+        private List<Xamarin.Forms.Maps.Pin> globalPinList = new List<Xamarin.Forms.Maps.Pin>();
 
-        public MainPage()
+        public MainPage(List<CustomCircle> circleList, List<Xamarin.Forms.Maps.Pin> pinList)
         {
-            StartMainPage();
+            globalCircleList = circleList;
+            globalPinList = pinList;
+            StartMainPage(circleList, pinList);
         }
 
-        private async void StartMainPage()
+        public MainPage(List<CustomCircle> circleList, List<Xamarin.Forms.Maps.Pin> pinList, List<Place> undiscoveredPlaces)
+        {
+            globalUndiscoveredPlaces = undiscoveredPlaces;
+            globalCircleList = circleList;
+            globalPinList = pinList;
+            StartMainPage(circleList, pinList);
+        }
+
+        private async void StartMainPage(List<CustomCircle> circleList, List<Xamarin.Forms.Maps.Pin> pinList)
         {
             InitializeComponent();
-            await GetPlaces();
+            await AssignPins(circleList, pinList);
             await GetPermissions();
         }
 
@@ -65,7 +77,7 @@ namespace TDK
             }
         }
 
-        protected async Task GetPlaces()
+        /*protected async Task GetPlaces()
         {
             var places = await App.MobileService.GetTable<Place>().ToListAsync();
             List<UsersPlaces> discoveredPlacesIds;
@@ -75,9 +87,9 @@ namespace TDK
                 discoveredPlacesIds = conn.Table<UsersPlaces>().ToList();
             }
             await SeparateDiscoveredAndNotDiscoveredPlaces(places, discoveredPlacesIds);
-        }
+        }*/
 
-        private async Task SeparateDiscoveredAndNotDiscoveredPlaces(List<Place> allPlaces, List<UsersPlaces> discoveredPlacesIds)
+        /*private async Task SeparateDiscoveredAndNotDiscoveredPlaces(List<Place> allPlaces, List<UsersPlaces> discoveredPlacesIds)
         {
             List<Place> discovered = new List<Place>();
             List<Place> undiscovered = new List<Place>();
@@ -95,50 +107,16 @@ namespace TDK
             }
             globalUndiscoveredPlaces = undiscovered;
             await DisplayInMap(discovered, undiscovered);
-        }
+        }*/
 
-        private async Task DisplayInMap(List<Place> discovered, List<Place> undiscovered)
+        private async Task AssignPins(List<CustomCircle> circleList, List<Xamarin.Forms.Maps.Pin> pinList)
         {
-            List<CustomCircle> circleList = new List<CustomCircle>();
-            foreach (var place in undiscovered)
-            {
-                try
-                {
-                    var position = new Xamarin.Forms.Maps.Position(place.Latitude, place.Longitude);
-                    var circle = new MapsCustoms.CustomCircle
-                    {
-                        Position = position,
-                        Radius = 200
-                    };
-                    circleList.Add(circle);
-                }
-                catch (Exception ex)
-                {
-                }
-            }
             locationsMap.CircleList = circleList;
 
-            foreach (var place in discovered)
+            foreach (var pin in pinList)
             {
-                try
-                {
-                    var position = new Xamarin.Forms.Maps.Position(place.Latitude, place.Longitude);
-
-                    var pin = new Xamarin.Forms.Maps.Pin()
-                    {
-                        Type = Xamarin.Forms.Maps.PinType.Place,
-                        Position = position,
-                        Label = place.PlaceName,
-                        Address = place.PlaceAddess
-                    };
-
-                    locationsMap.Pins.Add(pin);
-                        
-                }
-                catch (Exception ex)
-                {
-                }
-            }
+                locationsMap.Pins.Add(pin);
+            }              
         }
 
         protected override async void OnAppearing()
@@ -188,15 +166,17 @@ namespace TDK
         private void CheckIfNewDiscovery(Position position)
         {
             double dist;
-
+            var discoveredPlace = new Place();
             foreach (var place in globalUndiscoveredPlaces)
             {
                 dist = DistanceBetweenPositions(position.Latitude, position.Longitude, place.Latitude, place.Longitude);
-                if(dist <= 10)
+                if(dist <= 50)
                 {
+                    discoveredPlace = place;
                     PlaceDiscovered(place);
                 }
             }
+            globalUndiscoveredPlaces.Remove(discoveredPlace);
         }
 
         private void PlaceDiscovered(Place place)
@@ -208,7 +188,7 @@ namespace TDK
                 newPlace.PlaceId = place.Id;
                 conn.Insert(newPlace);
             }
-            Navigation.PushAsync(new DiscoveredNewPlace(place));
+            Navigation.PushModalAsync(new DiscoveredNewPlace(place, globalCircleList, globalPinList));
         }
 
         private double DistanceBetweenPositions(double userLat, double userLon, double placeLat, double placeLon)
@@ -248,6 +228,11 @@ namespace TDK
 
             //dystans w metrach między user'em, a place'm
             return r * c;
+        }
+
+        private void StatsButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushModalAsync(new MenuStatystyk());
         }
     }
 }
