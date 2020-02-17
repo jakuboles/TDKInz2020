@@ -1,4 +1,6 @@
-﻿using SQLite;
+﻿using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +18,13 @@ namespace TDK
 	{
 		public LoadingPage ()
 		{
-			InitializeComponent ();
-            GetPlaces();
+            StartLoadingPage();
+        }
+
+        public async void StartLoadingPage()
+        {
+            InitializeComponent();
+            await GetPermissions();
         }
 
         protected async void GetPlaces()
@@ -49,7 +56,7 @@ namespace TDK
                 }
             }
             var globalUndiscoveredPlaces = undiscovered;
-            DisplayInMap(discovered, undiscovered);
+            DisplayInMap(discovered, undiscovered); 
         }
 
         private void DisplayInMap(List<Place> discovered, List<Place> undiscovered)
@@ -59,7 +66,7 @@ namespace TDK
             {
                 try
                 {
-                    var circle = createCircle(place);
+                    var circle = CreateCircle(place);
                     circleList.Add(circle);
                 }
                 catch (Exception ex)
@@ -73,7 +80,7 @@ namespace TDK
                 
                 try
                 {
-                    var pin = createPin(place);
+                    var pin = CreatePin(place);
                     pinList.Add(pin);
 
                 }
@@ -81,10 +88,10 @@ namespace TDK
                 {
                 }
             }
-            Navigation.PushModalAsync(new MainPage(circleList, pinList, undiscovered));
+            Navigation.PushModalAsync(new MainPage(circleList, pinList, undiscovered, discovered));
         }
 
-        private Xamarin.Forms.Maps.Pin createPin(Place place)
+        private Xamarin.Forms.Maps.Pin CreatePin(Place place)
         {
             var position = new Xamarin.Forms.Maps.Position(place.Latitude, place.Longitude);
             var pin = new Xamarin.Forms.Maps.Pin()
@@ -97,7 +104,7 @@ namespace TDK
             return pin;
         }
 
-        private MapsCustoms.CustomCircle createCircle(Place place)
+        private MapsCustoms.CustomCircle CreateCircle(Place place)
         {
             var position = new Xamarin.Forms.Maps.Position(place.Latitude, place.Longitude);
             var circle = new MapsCustoms.CustomCircle
@@ -106,6 +113,42 @@ namespace TDK
                 Radius = 250
             };
             return circle;
+        }
+
+        private async Task GetPermissions()
+        {
+            try
+            {
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.LocationWhenInUse);
+                if (status != PermissionStatus.Granted)
+                {
+                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.LocationWhenInUse))
+                    {
+                        await DisplayAlert("Potrzebna zgoda", "Do poprawnego działania tej aplikacji potrzebna jest zgoda na dostęp do lokalizacji urządzenia.", "OK");
+                    }
+
+                    var result = await CrossPermissions.Current.RequestPermissionsAsync(Permission.LocationWhenInUse);
+                    if (result.ContainsKey(Permission.LocationWhenInUse))
+                    {
+                        status = result[Permission.LocationWhenInUse];
+                    }
+                }
+
+                if (status == PermissionStatus.Granted)
+                {
+                    GetPlaces();
+                }
+                else
+                {
+                    await DisplayAlert("BŁĄD", "Brak zezwolenia na korzystanie z lokalizacji urządzenia.", "OK");
+                    labelLoading.Text = "";
+                    labelLoading.Text = "By korzystać z tej aplikacji potrzebna jest zgoda na korzystanie z Lokalizacji. Wyłącz aplikację i udziel jej praw w ustawieniach.";
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("BŁĄD", ex.Message, "OK");
+            }
         }
     }
 }

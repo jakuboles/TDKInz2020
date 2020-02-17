@@ -10,7 +10,8 @@
                VerticalOptions="CenterAndExpand"
                HorizontalOptions="CenterAndExpand"
                HorizontalTextAlignment="Center"
-               Margin="20, 0, 20, 0"/>
+               Margin="20, 0, 20, 0"
+               x:Name="labelNewPlace"/>
         <StackLayout Margin="50, 0, 50, 25">
             <Label x:Name="placeName"
                Text="Nazwa miejsca"

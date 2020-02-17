@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TDK.DiscoveredPlaces"
+             BackgroundColor="{StaticResource standardBackground}">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label x:Name="labelPlacesCounts"
+                VerticalOptions="StartAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                TextColor="{StaticResource whiteFlagKepno}"
+                Padding="20"/>
+
+            <ListView x:Name="listDiscoveredPlaces"
+                      ItemTapped="ListDiscoveredPlaces_ItemTapped"
+                      SelectionMode="None"
+                      SeparatorColor="{StaticResource greenArmsKepno}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding PlaceName}"
+                                   TextColor="{StaticResource whiteFlagKepno}"/>
+                     </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button x:Name="labelGoBack"
+                   VerticalOptions="EndAndExpand"
+                   HorizontalOptions="EndAndExpand"
+                   Text="Wróć"
+                   BackgroundColor="{StaticResource greenFlagKepno}"
+                   TextColor="{StaticResource whiteFlagKepno}"
+                   Clicked="LabelGoBack_Clicked"
+                   Margin="20"
+                   CornerRadius="0"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

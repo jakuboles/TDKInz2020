@@ -9,7 +9,13 @@
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" 
                 TextColor="{StaticResource whiteFlagKepno}"
-                FontSize="40"/>
+                FontSize="40"
+                x:Name="labelLoading"/>
+            <Label Text=""
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                TextColor="{StaticResource whiteFlagKepno}"
+                x:Name="labelInformation"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

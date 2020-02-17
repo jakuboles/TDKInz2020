@@ -1,4 +1,5 @@
 ﻿using Android.Content;
+using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Java.Lang;
 using MapOverlay;
@@ -38,6 +39,8 @@ namespace MapOverlay.Droid
         protected override void OnMapReady(Android.Gms.Maps.GoogleMap map)
         {
             base.OnMapReady(map);
+
+            map.UiSettings.MapToolbarEnabled = false;
 
             foreach (var circle in circles)
             {

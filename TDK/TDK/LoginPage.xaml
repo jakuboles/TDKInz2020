@@ -2,11 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TDK.LoginPage"
-             BackgroundColor="{StaticResource standardBackground}"
-             >
+             BackgroundColor="{StaticResource standardBackground}">
+
     <StackLayout VerticalOptions="Center"
                  Margin="20,0">
-        
         <Entry x:Name="emailEntry"
                Placeholder="Email"
                PlaceholderColor="{StaticResource whiteFlagKepno}"
@@ -23,6 +22,7 @@
                 Text="Zaloguj"
                 BackgroundColor="{StaticResource greenFlagKepno}"
                 TextColor="{StaticResource whiteFlagKepno}"
+                BorderWidth="0"
                 Clicked="LoginButton_Clicked"/>
 
         <Button x:Name="registerButton"
