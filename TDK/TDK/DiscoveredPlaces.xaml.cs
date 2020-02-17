@@ -21,7 +21,7 @@ namespace TDK
             this.discoveredPlaces = discoveredPlaces;
             this.totalPlacesNumber = "Odkryte miejsca " + discoveredPlaces.Count.ToString() + "/" + totalPlacesNumber;
             InitializeComponent ();
-		}
+        }
 
         protected override void OnAppearing()
         {
@@ -34,14 +34,12 @@ namespace TDK
         private void ListDiscoveredPlaces_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var place = e.Item as Place;
-            Navigation.PushModalAsync(new DiscoveredNewPlace(place));
+            Navigation.PushAsync(new DiscoveredNewPlace(place));
         }
 
         private void LabelGoBack_Clicked(object sender, EventArgs e)
         { 
-            Navigation.ModalStack.ToList().Clear();
-            
-            Navigation.PopModalAsync();
+            Navigation.PopAsync();
         }
     }
 }

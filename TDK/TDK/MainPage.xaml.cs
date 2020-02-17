@@ -24,7 +24,7 @@ namespace TDK
         {
             globalCircleList = circleList;
             globalPinList = pinList;
-            StartMainPage(circleList, pinList);
+            
         }
 
         public MainPage(List<CustomCircle> circleList, List<Xamarin.Forms.Maps.Pin> pinList, List<Place> undiscoveredPlaces, List<Place> discoveredPlaces)
@@ -33,6 +33,7 @@ namespace TDK
             globalDiscoveredPlaces = discoveredPlaces;
             globalCircleList = circleList;
             globalPinList = pinList;
+            
             StartMainPage(circleList, pinList);
         }
 
@@ -41,13 +42,9 @@ namespace TDK
             InitializeComponent();
             await AssignPins(circleList, pinList);
             locationsMap.IsShowingUser = true;
-            var existingPages = Navigation.NavigationStack.ToList();
-            foreach (var page in existingPages)
-            {
-                Navigation.RemovePage(page);
-            }
             //GetLocation();
             //await GetPermissions();
+            
         }
 
         /*private async Task GetPermissions()
@@ -131,12 +128,15 @@ namespace TDK
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            
+
             var locator = CrossGeolocator.Current;
             locator.PositionChanged += Locator_PositionChanged;
             await locator.StartListeningAsync(TimeSpan.Zero, 100);
 
+            ClearNavigationStack();
+
             GetLocation();
+            
         }
 
         protected override void OnDisappearing()
@@ -156,6 +156,7 @@ namespace TDK
         {
             var locator = CrossGeolocator.Current;
             var position = await locator.GetPositionAsync();
+            
             MoveMap(position);
         }
 
@@ -180,7 +181,7 @@ namespace TDK
                 }
             }
         }
-
+        
         private void PlaceDiscovered(Place place)
         {
             var newPlace = new UsersPlaces();
@@ -190,7 +191,7 @@ namespace TDK
                 newPlace.PlaceId = place.Id;
                 conn.Insert(newPlace);
             }
-            Navigation.PushModalAsync(new DiscoveredNewPlace(place, globalCircleList, globalPinList, globalUndiscoveredPlaces, globalDiscoveredPlaces));
+            Navigation.PushAsync(new DiscoveredNewPlace(place, globalCircleList, globalPinList, globalUndiscoveredPlaces, globalDiscoveredPlaces));
         }
 
         private double DistanceBetweenPositions(double userLat, double userLon, double placeLat, double placeLon)
@@ -234,7 +235,23 @@ namespace TDK
 
         private void StatsButton_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(new DiscoveredPlaces(globalDiscoveredPlaces, globalDiscoveredPlaces.Count + globalUndiscoveredPlaces.Count));
+            Navigation.PushAsync(new DiscoveredPlaces(globalDiscoveredPlaces, globalDiscoveredPlaces.Count + globalUndiscoveredPlaces.Count));
+        }
+
+        private void ClearNavigationStack()
+        {
+            if(Navigation.NavigationStack.Count > 0)
+            {
+                var existingPages = Navigation.NavigationStack.ToList();
+                var currentPage = Navigation.NavigationStack.Last();
+                foreach (var page in existingPages)
+                {
+                    if (page != currentPage)
+                    {
+                        Navigation.RemovePage(page);
+                    }
+                }
+            }
         }
     }
 }

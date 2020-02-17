@@ -88,7 +88,9 @@ namespace TDK
                 {
                 }
             }
-            Navigation.PushModalAsync(new MainPage(circleList, pinList, undiscovered, discovered));
+            
+            Navigation.PushAsync(new MainPage(circleList, pinList, undiscovered, discovered));
+
         }
 
         private Xamarin.Forms.Maps.Pin CreatePin(Place place)

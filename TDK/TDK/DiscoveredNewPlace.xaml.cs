@@ -78,7 +78,7 @@ namespace TDK
         {
             if(discoveredPlaceViewed)
             {
-                await Navigation.PopModalAsync();
+                await Navigation.PopAsync();
             }
             else
             {
@@ -87,7 +87,7 @@ namespace TDK
                 {
                     Navigation.RemovePage(page);
                 }
-                await Navigation.PushModalAsync(new MainPage(circleList, pinList, globalUndiscoveredPlaces, globalDiscoveredPlaces));
+                await Navigation.PushAsync(new MainPage(circleList, pinList, globalUndiscoveredPlaces, globalDiscoveredPlaces));
             }
         }
     }
